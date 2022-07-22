@@ -23,6 +23,8 @@
       "Models/*": ["./src/models/*"],
       "Types/*": ["./src/types/*"],
       "Utils/*": ["./src/utils/*"],
+      "Api/*": ["./src/api/*"],
+      "Hooks/*": ["./src/hooks/*"],
     }
   },
   "include": ["src", "vite.config.ts"],

@@ -1,0 +1,74 @@
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
+const Box = styled.div`
+    display: grid;
+    grid-template-columns: 100%;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 15px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    cursor: pointer;
+    @media (min-width: 768px) {
+        grid-template-columns: 50% 50%;
+    }
+`;
+
+const Image = styled.img`
+    height: 240px;
+    border-radius: 4px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    cursor: pointer;
+`;
+
+const InfoBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    cursor: pointer;
+`;
+
+const Title = styled.p`
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    text-align: inherit;
+    cursor: pointer;
+`;
+
+const Text = styled.p`
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+    text-align: inherit;
+    cursor: pointer;
+`;
+
+type Props = {
+    id: string;
+    destination: string;
+    title: string;
+    photos: { url: string };
+};
+
+const ListItem = (props: Props) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate({
+            pathname: `/sale/${props.id}`,
+        });
+    };
+
+    return (
+        <Box onClick={handleClick}>
+            <Image src={props.photos.url} alt="photo" />
+            <InfoBox>
+                <Title>{props.title}</Title>
+                <Text>{props.destination}</Text>
+            </InfoBox>
+        </Box>
+    );
+};
+
+export default ListItem;
