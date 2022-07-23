@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import ListItem from 'Components/ListItem';
+import Spinner from 'Components/Spinner';
 
 import { Sale } from 'Types/taks-type';
 import { useParams } from '../hooks/useParams';
 import { request } from '../api';
-
 import { searchRequests } from '../api/requests';
 
 const Box = styled.div`
@@ -41,6 +41,17 @@ const Back = styled.p`
     cursor: pointer;
 `;
 
+const SpinnerBox = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+`;
+
 export const Row = styled.div`
     display: flex;
     flex-direction: row;
@@ -49,9 +60,10 @@ export const Row = styled.div`
 `;
 
 const ListPage = () => {
-    const [resultCount, setResultCount] = useState<number>(0);
+    const [resultCount, setResultCount] = useState<number | null>(null);
     const [sales, setSales] = useState<Sale[] | null>(null);
     const [notResult, setNotResult] = useState<boolean>(false);
+    const [loader, setLoader] = useState<boolean>(true);
     const { query } = useParams();
 
     const navigate = useNavigate();
@@ -64,6 +76,7 @@ const ListPage = () => {
     useEffect(() => {
         if (query) {
             request(searchRequests, { query }).then((res) => {
+                setLoader(false);
                 setSales(res.data.saleSearch.sales);
                 setResultCount(res.data.saleSearch.resultCount);
             });
@@ -71,7 +84,7 @@ const ListPage = () => {
     }, [query]);
 
     useEffect(() => {
-        if (Number(resultCount) === 0) {
+        if (resultCount === 0) {
             setNotResult(true);
         }
     }, [resultCount]);
@@ -94,6 +107,11 @@ const ListPage = () => {
                         />
                     );
                 })}
+            {loader && (
+                <SpinnerBox>
+                    <Spinner />
+                </SpinnerBox>
+            )}
             {notResult && <EmptyPage>No results were found for &quot;{query}&quot;.</EmptyPage>}
         </Box>
     );

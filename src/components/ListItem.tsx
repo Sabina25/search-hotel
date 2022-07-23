@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
+import { Title, Text } from '../layout';
+
 const Box = styled.div`
     display: grid;
     grid-template-columns: 100%;
@@ -25,22 +27,6 @@ const InfoBox = styled.div`
     display: flex;
     flex-direction: column;
     gap: 30px;
-    cursor: pointer;
-`;
-
-const Title = styled.p`
-    font-size: 24px;
-    font-weight: 600;
-    color: white;
-    text-align: inherit;
-    cursor: pointer;
-`;
-
-const Text = styled.p`
-    font-size: 18px;
-    font-weight: 400;
-    color: white;
-    text-align: inherit;
     cursor: pointer;
 `;
 
