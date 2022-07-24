@@ -87,9 +87,9 @@ const SalePage = () => {
 
     return (
         <Box>
+            <Back onClick={moveToSearchPage}>Go to search page</Back>
             {sale && (
                 <>
-                    <Back onClick={moveToSearchPage}>Go to search page</Back>
                     <Title>{sale.title}</Title>
                     <Info dangerouslySetInnerHTML={{ __html: sale.details }} />
                     <Row>
