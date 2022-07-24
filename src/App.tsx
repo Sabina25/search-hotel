@@ -1,17 +1,17 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import HomePage from 'Pages/HomePage';
-import ListPage from 'Pages/ListPage';
+import SearchPage from 'Pages/SearchPage';
+import SalesListPage from 'Pages/SalesListPage';
 import Page404 from 'Pages/404Page';
 
 import SalePage from 'Pages/SalePage';
-import { ROOT, SEARCH, SALE } from 'Routes/index';
+import { ROOT, SALES_LIST, SALE } from 'Routes/index';
 
 const App = () => (
     <BrowserRouter>
         <Routes>
-            <Route path={ROOT} element={<HomePage />} />
-            <Route path={SEARCH} element={<ListPage />} />
-            <Route path={SALE} element={<SalePage />} />
+            <Route path={ROOT} element={<SearchPage />} />
+            <Route path={SALES_LIST} element={<SalesListPage />} />
+            <Route path={SALE()} element={<SalePage />} />
             <Route path="*" element={<Page404 />} />
         </Routes>
     </BrowserRouter>

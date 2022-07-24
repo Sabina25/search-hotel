@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const SpinnerBox = styled.div`
+const SpinnerStyled = styled.div`
     z-index: 45;
     width: 30px;
     height: 30px;
@@ -21,7 +21,7 @@ const SpinnerBox = styled.div`
 `;
 
 const Spinner = () => {
-    return <SpinnerBox />;
+    return <SpinnerStyled />;
 };
 
 export default Spinner;

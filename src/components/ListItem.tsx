@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+
+import useNav from 'Hooks/useNav';
 
 import { Title, Text } from '../layout';
 
@@ -38,16 +39,14 @@ type Props = {
 };
 
 const ListItem = (props: Props) => {
-    const navigate = useNavigate();
+    const { moveToSalePage } = useNav();
 
-    const handleClick = () => {
-        navigate({
-            pathname: `/sale/${props.id}`,
-        });
+    const handleShowMore = () => {
+        moveToSalePage(props.id);
     };
 
     return (
-        <Box onClick={handleClick}>
+        <Box onClick={handleShowMore}>
             <Image src={props.photos.url} alt="photo" />
             <InfoBox>
                 <Title>{props.title}</Title>

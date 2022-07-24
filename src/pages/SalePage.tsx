@@ -1,11 +1,14 @@
-import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
-
-import { SaleType } from 'Types/taks-type';
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+
+import Spinner from 'Components/Spinner';
+import { SaleType } from 'Types/taks-type';
 import { request } from 'Api/index';
 import { saleRequest } from 'Api/requests';
-import { Row } from 'Pages/ListPage';
+import { Row } from 'Pages/SalesListPage';
+import useNav from 'Hooks/useNav';
+import { Message, SpinnerBox } from '../layout';
 
 const Box = styled.div`
     width: 100%;
@@ -54,36 +57,39 @@ const Back = styled.p`
 `;
 
 const SalePage = () => {
-    const [sale, setSale] = useState<SaleType | null>(null);
-
     const { id } = useParams();
 
-    const navigate = useNavigate();
-    const moveToBack = () => {
-        navigate({
-            pathname: '/',
-        });
-    };
+    const [sale, setSale] = useState<SaleType | null>(null);
+    const [loader, setLoader] = useState<boolean>(true);
+    const [error, setError] = useState(false);
+    const { moveToSearchPage } = useNav();
 
     useEffect(() => {
         if (id) {
-            request(saleRequest, { saleId: id }).then((res) => {
-                setSale({
-                    title: res.data.sale.editorial.title,
-                    details: res.data.sale.editorial.hotelDetails,
-                    destination: res.data.sale.editorial.destinationName,
-                    photo: res.data.sale.photos[0],
-                    price: res.data.sale.prices.leadRate.forDisplay,
+            request(saleRequest, { saleId: id })
+                .then((res) => {
+                    setLoader(false);
+                    setSale({
+                        title: res.data.sale.editorial.title,
+                        details: res.data.sale.editorial.hotelDetails,
+                        destination: res.data.sale.editorial.destinationName,
+                        photo: res.data.sale.photos[0],
+                        price: res.data.sale.prices.leadRate.forDisplay,
+                    });
+                })
+                .catch((e) => {
+                    setError(true);
+                    setLoader(false);
+                    console.log(`${e.name}: ${e.message}`);
                 });
-            });
         }
-    }, []);
+    }, [id]);
 
     return (
         <Box>
-            {sale ? (
+            {sale && (
                 <>
-                    <Back onClick={moveToBack}>Go to search page</Back>
+                    <Back onClick={moveToSearchPage}>Go to search page</Back>
                     <Title>{sale.title}</Title>
                     <Info dangerouslySetInnerHTML={{ __html: sale.details }} />
                     <Row>
@@ -92,9 +98,13 @@ const SalePage = () => {
                     </Row>
                     <Image src={sale.photo.url} alt="photo" />
                 </>
-            ) : (
-                <Title>Hotel not selected!</Title>
             )}
+            {loader && (
+                <SpinnerBox>
+                    <Spinner />
+                </SpinnerBox>
+            )}
+            {error && <Message>Sorry! Something went wrong.</Message>}
         </Box>
     );
 };

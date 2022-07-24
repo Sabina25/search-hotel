@@ -1,20 +1,21 @@
 import styled from 'styled-components';
 import Search from 'Components/Search';
 
-const HomePageStyled = styled.div`
+const SearchPageStyled = styled.div`
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 40px;
 `;
 
-const HomePage = () => {
+const SearchPage = () => {
     return (
-        <HomePageStyled>
+        <SearchPageStyled>
             <Search />
-        </HomePageStyled>
+        </SearchPageStyled>
     );
 };
 
-export default HomePage;
+export default SearchPage;

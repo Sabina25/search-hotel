@@ -1,14 +1,11 @@
-export const request = (query, variables) => {
-    return fetch('https://staging.sparrow.escapes.tech/graphql', {
+export const request = async (query: string, variables: object) => {
+    const response = await fetch('https://staging.sparrow.escapes.tech/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, variables }),
-    }).then((res) =>
-        res
-            .json()
-            .then((result) => {
-                return result;
-            })
-            .catch((err) => console.log(err))
-    );
+    });
+    if (response.ok) {
+        return response.json();
+    }
+    return Promise.reject(response);
 };

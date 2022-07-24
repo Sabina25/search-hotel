@@ -1,29 +1,29 @@
-import styled from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState, ChangeEvent, KeyboardEvent } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-const InputBox = styled.div`
-    position: relative;
-    width: 100%;
-    height: 72px;
-    max-width: 500px;
-    margin: auto auto;
-    border-radius: 4px;
+import { SALES_LIST } from 'Routes/index';
+
+const SearchStyled = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 `;
 
-const Text = styled.p`
+const Title = styled.p`
     font-size: 18px;
     font-weight: 500;
     color: white;
-    padding-bottom: 8px;
 `;
 
-const Input = styled.input.attrs(() => ({
-    type: 'search',
-}))`
-    width: 100%;
-    height: 40px;
-    margin-top: 1px;
+const InputWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+`;
+
+const Input = styled.input`
+    min-width: 350px;
     padding: 10px 15px;
     border: 1px solid white;
     border-radius: 4px;
@@ -31,78 +31,68 @@ const Input = styled.input.attrs(() => ({
     color: white;
 `;
 
-const Button = styled.div`
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 90px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+const Button = styled.button`
+    padding: 10px 10px;
     font-size: 12px;
     font-weight: 500;
     color: black;
     background: #abcdef;
-    border-radius: 0 4px 4px 0;
-    user-select: none;
-    &:hover {
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover:enabled {
         background: #6495ed;
+        color: #efefef;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: default;
     }
 `;
 
-const Message = styled.p`
-    position: absolute;
-    bottom: -24px;
-    left: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    color: red;
-`;
-
-let timerId;
-
 const Search = () => {
-    const [value, setValue] = useState('');
-    const [enterWordMessage, setEnterWordMessage] = useState(false);
-
     const navigate = useNavigate();
-    const goToResult = () => {
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleInputSearch = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(event.target.value.trim());
+    };
+
+    const handleRunSearch = useCallback(() => {
         navigate({
-            pathname: 'search',
+            pathname: SALES_LIST,
             search: createSearchParams({
-                query: value,
+                query: searchValue,
             }).toString(),
         });
-    };
+    }, [navigate, searchValue]);
 
-    const handleChange = (e) => {
-        setValue(e.target.value.trim());
-    };
-
-    const handleClick = useCallback(() => {
-        if (value.length === 0) {
-            setEnterWordMessage(true);
-        } else {
-            goToResult();
-        }
-    }, [value]);
-
-    useEffect(() => {
-        if (enterWordMessage) {
-            timerId = setTimeout(() => setEnterWordMessage(false), 3000);
-        }
-
-        return () => clearTimeout(timerId);
-    }, [enterWordMessage]);
+    const handleKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLInputElement>) => {
+            if (event.key === 'Enter' && searchValue.length !== 0) {
+                handleRunSearch();
+            }
+        },
+        [handleRunSearch, searchValue]
+    );
 
     return (
-        <InputBox>
-            <Text>Enter the name of the city</Text>
-            <Input name="search" placeholder="Search..." value={value} onChange={handleChange} />
-            <Button onClick={handleClick}>SEARCH</Button>
-            {enterWordMessage && <Message>Enter the name of the city in the search box</Message>}
-        </InputBox>
+        <SearchStyled>
+            <Title>Enter the name of the city</Title>
+            <InputWrapper>
+                <Input
+                    type="search"
+                    placeholder="Search..."
+                    value={searchValue}
+                    onChange={handleInputSearch}
+                    onKeyDown={handleKeyDown}
+                />
+                <Button onClick={handleRunSearch} disabled={searchValue.length === 0}>
+                    SEARCH
+                </Button>
+            </InputWrapper>
+        </SearchStyled>
     );
 };
 
