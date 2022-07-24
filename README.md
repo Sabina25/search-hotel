@@ -1,6 +1,5 @@
-# react-starter-kit
-Very simple starter kit for my react web dev projects with **typescript, styled-components, react-hook-form,
-react-router and effector (with immer)**
+# search-hotel
+web dev projects with **typescript, grafgl, styled-components, react-router
 
 ## Ecosystem
 
