@@ -14,22 +14,30 @@
 
 Clone the repo and run for get deterministic, repeatable build
 
-````npm ci````
+````
+npm ci
+````
 
 Or run command
 
-````npx degit TheVerilly/react-starter-kit project-name````
+````
+npx degit TheVerilly/react-starter-kit project-name
+````
 
 Now you are ready to go:
 
-````npm run dev````
+````
+npm run dev
+````
 
 Boom! These scripts run your app in development mode.
 
 ## Building
 
 To build the project, run:
-````npm run build````
+````
+npm run build
+````
 
 ## Introduction
 A small project to show off my technical skills in interface development.
