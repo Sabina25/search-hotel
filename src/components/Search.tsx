@@ -79,7 +79,7 @@ const Search = () => {
 
     return (
         <SearchStyled>
-            <Title>Enter the name of the city TEST</Title>
+            <Title>Enter the name of the city</Title>
             <InputWrapper>
                 <Input
                     type="search"
