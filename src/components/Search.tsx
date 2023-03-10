@@ -81,6 +81,7 @@ const Search = () => {
         <SearchStyled>
             <Title>Enter the name of the city</Title>
             <InputWrapper>
+                <h1>TEST</h1>
                 <Input
                     type="search"
                     placeholder="Search..."
