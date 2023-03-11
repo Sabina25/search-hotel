@@ -79,7 +79,6 @@ const Search = () => {
 
     return (
         <SearchStyled>
-            <h1>It is works</h1>
             <Title>Enter the name of the city</Title>
             <InputWrapper>
                 <Input
