@@ -3,7 +3,11 @@
 [PROJECT POSTED HERE](https://github-b91ab.firebaseapp.com/)
 
 ## Technologies
-** ReactJS, TypeScript, GraphQL, React-router, Styled-components **
+* ReactJS
+* TypeScript
+* GraphQL
+* React-router
+* Styled-components
 
 
 ## Ecosystem
